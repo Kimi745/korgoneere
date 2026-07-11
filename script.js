@@ -52,11 +52,12 @@ const CITIES = {
 };
 const FLAGS = { "Sénégal": "🇸🇳", "Burkina Faso": "🇧🇫" };
 const PAYMENT_INFO = {
-  "Sénégal": { wave: "+221 77 000 00 00", om: "+221 78 000 00 00" },
-  "Burkina Faso": { wave: "+226 70 00 00 00", om: "+226 76 00 00 00" }
+  "Sénégal": { wave: "+221 77 463 13 82", om: "+221 77 463 13 82" },
+  "Burkina Faso": { wave: "+226 54 57 03 65", om: "+226 54 57 03 65" }
 };
-const WHATSAPP_NUMBER = "221000000000"; // TODO: remplacer par le vrai numéro WhatsApp Business
+const WHATSAPP_NUMBER = "221774631382"; // TODO: remplacer par le vrai numéro WhatsApp Business
 const DEPOSIT_RATE = 30; // % d'acompte
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzX0jsji1q645OPoRLMMxlaEE2iwmQOnwhAw7uTWgiBDTuMA9PkvE3t0bAAdZbk24O_6Q/exec";
 
 function fmt(n){ return n.toLocaleString('fr-FR').replace(/,/g, ' '); }
 
@@ -222,9 +223,20 @@ function initOrderPage(){
     const deposit = Math.round(total * DEPOSIT_RATE / 100 / 100) * 100;
     const info = PAYMENT_INFO[country];
 
-    // TODO : envoyer aussi ces données vers Google Sheets via l'URL du
-    // Google Apps Script (prochaine étape), ex:
-    // fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify({code, design: design.id, name, phone, country, city, qty, total}) });
+    // Envoi vers Google Sheets via Google Apps Script.
+    // mode 'no-cors' + Content-Type text/plain : évite le blocage CORS
+    // propre aux applications web Apps Script. On n'attend pas de réponse
+    // lisible (normal), la commande part "en confiance" en arrière-plan.
+    if (APPS_SCRIPT_URL && !APPS_SCRIPT_URL.startsWith('COLLER_ICI')) {
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ code, design: design.id, name, phone, country, city, qty, total })
+      }).catch(err => console.error('Erreur envoi Google Sheets :', err));
+    } else {
+      console.warn('APPS_SCRIPT_URL non configuré : la commande n\'a pas été envoyée à Google Sheets.');
+    }
 
     const message = `Bonjour, je confirme ma commande Korgoneere.
 Produit : ${product.name} (${code}) — ${design.label}
