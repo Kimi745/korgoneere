@@ -55,7 +55,7 @@ const PAYMENT_INFO = {
   "Sénégal": { wave: "+221 77 463 13 82", om: "+221 77 463 13 82" },
   "Burkina Faso": { wave: "+226 54 57 03 65", om: "+226 54 57 03 65" }
 };
-const WHATSAPP_NUMBER = "221774631382"; // TODO: remplacer par le vrai numéro WhatsApp Business
+const WHATSAPP_NUMBER = "221774631382";
 const DEPOSIT_RATE = 30; // % d'acompte
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzX0jsji1q645OPoRLMMxlaEE2iwmQOnwhAw7uTWgiBDTuMA9PkvE3t0bAAdZbk24O_6Q/exec";
 
@@ -224,16 +224,28 @@ function initOrderPage(){
     const info = PAYMENT_INFO[country];
 
     // Envoi vers Google Sheets via Google Apps Script.
-    // mode 'no-cors' + Content-Type text/plain : évite le blocage CORS
-    // propre aux applications web Apps Script. On n'attend pas de réponse
-    // lisible (normal), la commande part "en confiance" en arrière-plan.
+    // Content-Type text/plain : évite le blocage CORS des applications web
+    // Apps Script. On lit la réponse pour afficher une erreur claire si ça
+    // échoue, plutôt que de deviner en silence.
     if (APPS_SCRIPT_URL && !APPS_SCRIPT_URL.startsWith('COLLER_ICI')) {
       fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ code, design: design.id, name, phone, country, city, qty, total })
-      }).catch(err => console.error('Erreur envoi Google Sheets :', err));
+      })
+        .then(r => r.json())
+        .then(result => {
+          if (result.status !== 'ok') {
+            console.error('Erreur Google Sheets :', result.message);
+            alert("La commande a été confirmée, mais l'enregistrement dans Google Sheets a échoué :\n" + result.message + "\n\nContactez le vendeur sur WhatsApp pour confirmer manuellement.");
+          } else {
+            console.log('Commande enregistrée dans Google Sheets, onglet :', result.sheetUsed);
+          }
+        })
+        .catch(err => {
+          console.error('Erreur réseau vers Google Sheets :', err);
+          alert("La commande a été confirmée, mais la connexion à Google Sheets a échoué. Contactez le vendeur sur WhatsApp pour confirmer manuellement.");
+        });
     } else {
       console.warn('APPS_SCRIPT_URL non configuré : la commande n\'a pas été envoyée à Google Sheets.');
     }
