@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korgoneere — Valider ma commande</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="site">
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="backlink">← Continuer mes achats</a>
+      <div class="logo">Korgoneere</div>
+    </div>
+  </header>
+
+  <div class="wrap wrap--medium">
+    <div class="summary">
+      <div class="summary-swatch" id="summarySwatch"></div>
+      <div>
+        <div class="summary-name" id="summaryName">Chargement…</div>
+        <div class="summary-meta" id="summaryMeta"></div>
+      </div>
+    </div>
+
+    <form class="formcard" id="orderForm">
+      <div class="formtitle">Valider votre commande</div>
+
+      <div class="field">
+        <label for="fname">Votre nom complet <span class="req">*</span></label>
+        <input id="fname" type="text" placeholder="ex. Aïssatou Diallo" required>
+      </div>
+
+      <div class="field">
+        <label for="fphone">Numéro de téléphone <span class="req">*</span></label>
+        <div class="phonerow">
+          <div class="flagbox" id="flagBox">🌍</div>
+          <input id="fphone" type="tel" placeholder="77 123 45 67" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="fcountry">Pays <span class="req">*</span></label>
+        <select id="fcountry" required>
+          <option value="" disabled selected>Choisir un pays</option>
+          <option value="Sénégal">🇸🇳 Sénégal</option>
+          <option value="Burkina Faso">🇧🇫 Burkina Faso</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="fcity">Ville de livraison <span class="req">*</span></label>
+        <select id="fcity" required disabled>
+          <option value="" selected>Choisir d'abord un pays</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Quantité <span class="req">*</span></label>
+        <div class="qtyrow">
+          <div class="qtybtn" id="qtyMinus">–</div>
+          <div id="qtyval">1</div>
+          <div class="qtybtn" id="qtyPlus">+</div>
+        </div>
+      </div>
+
+      <div class="totalrow">
+        <div>
+          <div class="label">Total</div>
+          <div class="qtynote" id="qtyNoteText">(1 pièce)</div>
+        </div>
+        <div class="amount" id="totalAmount"></div>
+      </div>
+
+      <div class="deposit-note" id="depositNote">
+        Choisissez votre pays pour voir les instructions d'acompte.
+      </div>
+
+      <button type="submit" class="cta">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h13M11 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Confirmer ma commande
+      </button>
+      <div class="payinfo">*Acompte obligatoire via Wave ou Orange Money pour valider la commande</div>
+      <div class="errormsg" id="errorMsg">Merci de remplir tous les champs avant de continuer.</div>
+    </form>
+
+    <div class="confirm" id="confirmBox">
+      <h2>Commande reçue !</h2>
+      <p>Envoyez votre acompte puis contactez-nous sur WhatsApp — notre livreur vous appelle ensuite pour organiser la livraison.</p>
+      <a href="#" id="waLink" class="wa-btn" target="_blank" rel="noopener">Continuer sur WhatsApp →</a>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="foot-brand">Korgoneere</div>
+    <div class="foot-links"><a href="#">Contact</a><a href="#">WhatsApp</a><a href="#">À propos</a></div>
+    <div class="foot-pay">
+      <span class="paybadge">WAVE</span>
+      <span class="paybadge">ORANGE MONEY</span>
+    </div>
+  </footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

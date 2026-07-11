@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korgoneere — Produit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="site">
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="backlink">← Catalogue</a>
+      <div class="logo">Korgoneere</div>
+    </div>
+  </header>
+
+  <div class="wrap wrap--wide">
+    <div class="prod-layout" id="productRoot">
+
+      <div class="prod-media">
+        <div class="prod-hero" id="prodHero">
+          <div class="badge">Nouveau</div>
+          <img id="heroImg" class="hero-photo" alt="" style="display:none;">
+        </div>
+        <div class="design-label">Design sélectionné : <span id="designName"></span></div>
+        <div class="design-grid" id="designGrid"><!-- rempli par script.js --></div>
+        <div class="note-placeholder">Cliquez sur un design pour le sélectionner. Ajoutez vos photos dans /images avec les noms indiqués dans images/README.txt — elles remplacent automatiquement ces couleurs.</div>
+      </div>
+
+      <div class="prod-info">
+        <div class="prod-name" id="prodName">Chargement…</div>
+        <div class="prod-sub" id="prodDesc"></div>
+        <div class="prod-price" id="prodPrice"></div>
+        <div class="prod-stock" id="prodStock"></div>
+
+        <a href="#" class="cta-order" id="orderLink">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h13M11 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Commander maintenant
+        </a>
+
+        <div class="features">
+          <div class="feature">
+            <div class="swatchbox" style="background:linear-gradient(135deg,#E4C766,#C9A227)"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><path d="M12 2l4 6-4 14-4-14 4-6z" stroke="#163832" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            <div class="flabel">Matière premium</div>
+          </div>
+          <div class="feature">
+            <div class="swatchbox" style="background:linear-gradient(135deg,#7BAE96,#1F4A42)"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><path d="M4 20c8 0 14-6 14-14 0 0-10 0-14 8-2 3-2 6 0 6z" stroke="#FAFAF8" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            <div class="flabel">Durable &amp; léger</div>
+          </div>
+          <div class="feature">
+            <div class="swatchbox" style="background:linear-gradient(135deg,#E2782B,#8a3f10)"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><path d="M12 2l2.8 6.4L21 9l-5 4.6L17.4 21 12 17.3 6.6 21 8 13.6 3 9l6.2-0.6L12 2z" stroke="#FAFAF8" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+            <div class="flabel">Style unique</div>
+          </div>
+          <div class="feature">
+            <div class="swatchbox" style="background:linear-gradient(135deg,#4a4a4a,#1b1b1b)"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><rect x="4" y="8" width="16" height="12" rx="1.5" stroke="#FAFAF8" stroke-width="1.6"/><path d="M4 12h16M9 8V6a3 3 0 0 1 6 0v2" stroke="#FAFAF8" stroke-width="1.6"/></svg></div>
+            <div class="flabel">Petit stock</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="foot-brand">Korgoneere</div>
+    <div class="foot-links"><a href="#">Contact</a><a href="#">WhatsApp</a><a href="#">À propos</a></div>
+    <div class="foot-pay">
+      <span class="paybadge">WAVE</span>
+      <span class="paybadge">ORANGE MONEY</span>
+    </div>
+  </footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
