@@ -246,8 +246,30 @@ J'envoie l'acompte de ${fmt(deposit)} FCFA via Wave (${info.wave}) ou Orange Mon
   updateTotals();
 }
 
+/* ============================================================
+   BOUTON WHATSAPP FLOTTANT (toutes les pages)
+   ============================================================ */
+function initWhatsAppFloat(){
+  if(document.querySelector('.wa-float')) return;
+  const a = document.createElement('a');
+  const msg = "Bonjour, j'ai une question sur vos sacs Korgoneere.";
+  a.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  a.className = 'wa-float';
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.setAttribute('aria-label', 'Discuter sur WhatsApp');
+  a.innerHTML = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none">
+    <circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.5"/>
+    <path d="M8.5 9.2c.6 2.4 2.2 4 4.6 4.6" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="8.5" cy="9.2" r="1" fill="#fff"/>
+    <circle cx="13.1" cy="13.8" r="1" fill="#fff"/>
+  </svg>`;
+  document.body.appendChild(a);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initCatalogue();
   initProductPage();
   initOrderPage();
+  initWhatsAppFloat();
 });

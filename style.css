@@ -126,6 +126,17 @@ footer.site-footer{background:var(--teal); padding:24px 20px; text-align:center;
 .confirm p{font-size:13.5px; color:rgba(255,255,255,0.8); line-height:1.5; margin-bottom:16px;}
 .wa-btn{display:inline-flex; align-items:center; gap:8px; background:var(--orange); color:#fff; font-weight:800; font-size:14px; padding:12px 22px; border-radius:9px;}
 
+/* ---------- bouton whatsapp flottant ---------- */
+.wa-float{
+  position:fixed; bottom:20px; right:20px; z-index:999;
+  width:56px; height:56px; border-radius:50%;
+  background:#25D366;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.28);
+  transition:transform .15s;
+}
+.wa-float:active{transform:scale(0.93);}
+
 /* ==================================================================
    DESKTOP (min-width: 900px)
    ================================================================== */
