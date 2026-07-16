@@ -12,12 +12,14 @@ const PRODUCTS = {
     price: 3500,
     stock: 50,
     designs: [
-      { id: "d1", label: "Rayures Multicolores", image: "images/b015-d1.jpg", grad: ["#E4C766", "#163832"] },
-      { id: "d2", label: "Feuilles Tropicales",   image: "images/b015-d2.jpg", grad: ["#4a7ba6", "#163832"] },
-      { id: "d3", label: "Motif Aztèque Vert",    image: "images/b015-d3.jpg", grad: ["#4a4a4a", "#1b1b1b"] },
-      { id: "d4", label: "Hiboux Multicolores",   image: "images/b015-d4.jpg", grad: ["#C9A227", "#6b4226"] },
-      { id: "d5", label: "Fleurs Automne",        image: "images/b015-d5.jpg", grad: ["#8a3f10", "#3a2414"] },
-      { id: "d6", label: "Rayures Pastel",        image: "images/b015-d6.jpg", grad: ["#7BAE96", "#1F4A42"] }
+      { id: "d1", label: "Lettrage Bordeaux",        image: "images/b015-d1.jpg", grad: ["#8a2e2e", "#4a1414"] },
+      { id: "d2", label: "Chevron Bleu & Blanc",      image: "images/b015-d2.jpg", grad: ["#1c3a8a", "#0d1f4d"] },
+      { id: "d3", label: "Chevron Noir & Blanc",      image: "images/b015-d3.jpg", grad: ["#3a3a3a", "#141414"] },
+      { id: "d4", label: "Chats Multicolores Noir",   image: "images/b015-d4.jpg", grad: ["#C9A227", "#1b1b1b"] },
+      { id: "d5", label: "Chats Multicolores Bleu",   image: "images/b015-d5.jpg", grad: ["#C9A227", "#1c3a8a"] },
+      { id: "d6", label: "Lettrage Noir",             image: "images/b015-d6.jpg", grad: ["#4a4a4a", "#1b1b1b"] },
+      { id: "d7", label: "Lettrage Bleu Marine",      image: "images/b015-d7.jpg", grad: ["#1c3a8a", "#0d1f4d"] },
+      { id: "d8", label: "Chevron Rouge & Blanc",     image: "images/b015-d8.jpg", grad: ["#C1502E", "#7a2a15"] }
     ]
   },
   B016: {
@@ -75,7 +77,12 @@ function initCatalogue(){
     card.className = 'prodcard';
     card.innerHTML = `
       <div class="prodcard-img" style="background:linear-gradient(150deg, ${main.grad[0]}, ${main.grad[1]} 70%)">
+        <svg class="prodcard-icon" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="18" y="30" width="84" height="60" rx="10" stroke="#FAFAF8" stroke-width="3"/>
+          <path d="M38 30V22a22 22 0 0 1 44 0v8" stroke="#FAFAF8" stroke-width="3" stroke-linecap="round"/>
+        </svg>
         <img src="${main.image}" alt="${p.name}" onerror="this.style.display='none'">
+        <span class="prodcard-badge">Nouveau</span>
       </div>
       <div class="prodcard-body">
         <div class="prodcard-name">${p.name}</div>
