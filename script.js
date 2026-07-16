@@ -9,8 +9,9 @@ const PRODUCTS = {
   B015: {
     name: "Sac Totebag Classique",
     desc: "Toile résistante, doublure intérieure, format A4. Idéal pour un usage quotidien.",
-    price: 3500,
+    price: 5000,
     stock: 50,
+    badge: "Nouveau",
     designs: [
       { id: "d1", label: "Lettrage Bordeaux",        image: "images/b015-d1.jpg", grad: ["#8a2e2e", "#4a1414"] },
       { id: "d2", label: "Chevron Bleu & Blanc",      image: "images/b015-d2.jpg", grad: ["#1c3a8a", "#0d1f4d"] },
@@ -27,6 +28,7 @@ const PRODUCTS = {
     desc: "Perles cousues main, anses renforcées, format compact. Pièce unique faite main.",
     price: 5000,
     stock: 30,
+    badge: "Rupture de stock",
     designs: [
       { id: "d1", label: "Perles Multicolore", image: "images/b016-d1.jpg", grad: ["#E2782B", "#C9A227"] },
       { id: "d2", label: "Perles Bleu",        image: "images/b016-d2.jpg", grad: ["#1F4A42", "#4a7ba6"] },
@@ -38,6 +40,7 @@ const PRODUCTS = {
     desc: "Simili-cuir premium, bandoulière ajustable, fermeture zip sécurisée.",
     price: 6000,
     stock: 20,
+    badge: "Rupture de stock",
     designs: [
       { id: "d1", label: "Marron", image: "images/b017-d1.jpg", grad: ["#6b4226", "#3a2414"] },
       { id: "d2", label: "Noir",   image: "images/b017-d2.jpg", grad: ["#3a3a3a", "#141414"] }
@@ -82,7 +85,7 @@ function initCatalogue(){
           <path d="M38 30V22a22 22 0 0 1 44 0v8" stroke="#FAFAF8" stroke-width="3" stroke-linecap="round"/>
         </svg>
         <img src="${main.image}" alt="${p.name}" onerror="this.style.display='none'">
-        <span class="prodcard-badge">Nouveau</span>
+        <span class="prodcard-badge">${p.badge || 'Nouveau'}</span>
       </div>
       <div class="prodcard-body">
         <div class="prodcard-name">${p.name}</div>
@@ -116,6 +119,7 @@ function initProductPage(){
   document.getElementById('prodDesc').textContent = product.desc;
   document.getElementById('prodPrice').textContent = fmt(product.price) + ' FCFA';
   document.getElementById('prodStock').textContent = `Il ne reste que ${product.stock} pièces disponibles`;
+  document.getElementById('prodBadge').textContent = product.badge || 'Nouveau';
   document.title = product.name + ' — Korgoneere';
 
   function setMain(d){
@@ -289,11 +293,8 @@ function initWhatsAppFloat(){
   a.target = '_blank';
   a.rel = 'noopener';
   a.setAttribute('aria-label', 'Discuter sur WhatsApp');
-  a.innerHTML = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none">
-    <circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.5"/>
-    <path d="M8.5 9.2c.6 2.4 2.2 4 4.6 4.6" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
-    <circle cx="8.5" cy="9.2" r="1" fill="#fff"/>
-    <circle cx="13.1" cy="13.8" r="1" fill="#fff"/>
+  a.innerHTML = `<svg viewBox="0 0 24 24" width="28" height="28" fill="none">
+    <path d="M7.1 2.6c-.8 0-1.6.6-1.8 1.4L4.6 7.2c-.1.5 0 1 .3 1.4l1.9 2.3c1 1.2 2.1 2.3 3.3 3.3l2.3 1.9c.4.3.9.4 1.4.3l3.2-.7c.8-.2 1.4-.9 1.4-1.8v-1.8c0-.6-.4-1.1-.9-1.3l-2.4-1c-.5-.2-1.1-.1-1.5.3l-.9.9c-1.2-.8-2.3-1.8-3.1-3.1l.9-.9c.4-.4.5-1 .3-1.5l-1-2.4c-.2-.5-.7-.9-1.3-.9h-1.4z" fill="#fff"/>
   </svg>`;
   document.body.appendChild(a);
 }
