@@ -11,7 +11,7 @@ const PRODUCTS = {
     desc: "Toile résistante, doublure intérieure, format A4. Idéal pour un usage quotidien.",
     price: 5000,
     stock: 50,
-    badge: "Nouveau",
+    badge: "Arrivé bientôt",
     designs: [
       { id: "d1", label: "Lettrage Bordeaux",        image: "images/b015-d1.jpg", grad: ["#8a2e2e", "#4a1414"] },
       { id: "d2", label: "Chevron Bleu & Blanc",      image: "images/b015-d2.jpg", grad: ["#1c3a8a", "#0d1f4d"] },
@@ -45,6 +45,20 @@ const PRODUCTS = {
       { id: "d1", label: "Marron", image: "images/b017-d1.jpg", grad: ["#6b4226", "#3a2414"] },
       { id: "d2", label: "Noir",   image: "images/b017-d2.jpg", grad: ["#3a3a3a", "#141414"] }
     ]
+  },
+  B018: {
+    name: "Sac Artisanal Toile Afrique",
+    desc: "Toile tissée façon jute, appliqué carte d'Afrique en tissu wax cousu main, anses en corde torsadée. Fait main par des artisans sénégalais — pièce unique.",
+    price: 6000,
+    stock: 6,
+    badge: "Nouveau",
+    designs: [
+      { id: "d1", label: "Bordeaux Géométrique", image: "images/b018-d1.jpg", grad: ["#8a2e2e", "#4a1414"] },
+      { id: "d2", label: "Bleu Marine Rayures",   image: "images/b018-d2.jpg", grad: ["#1c3a5c", "#0d1f2d"] },
+      { id: "d3", label: "Marron Kente",          image: "images/b018-d3.jpg", grad: ["#4a3520", "#2a1e10"] },
+      { id: "d4", label: "Bordeaux Pois",         image: "images/b018-d4.jpg", grad: ["#7a1e2e", "#3a0f14"] },
+      { id: "d5", label: "Violet Abstrait",       image: "images/b018-d5.jpg", grad: ["#8a2e8a", "#3a0f3a"] }
+    ]
   }
 };
 
@@ -65,6 +79,12 @@ const DEPOSIT_RATE = 30; // % d'acompte
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzX0jsji1q645OPoRLMMxlaEE2iwmQOnwhAw7uTWgiBDTuMA9PkvE3t0bAAdZbk24O_6Q/exec";
 
 function fmt(n){ return n.toLocaleString('fr-FR').replace(/,/g, ' '); }
+
+function stockLabel(product){
+  if (product.badge === 'Arrivé bientôt') return 'Disponible prochainement';
+  if (product.badge === 'Rupture de stock') return 'Stock épuisé';
+  return `Il ne reste que ${product.stock} pièces disponibles`;
+}
 
 /* ============================================================
    PAGE CATALOGUE (index.html)
@@ -91,7 +111,7 @@ function initCatalogue(){
         <div class="prodcard-name">${p.name}</div>
         <div class="prodcard-colors">${p.designs.length} design${p.designs.length>1?'s':''} disponible${p.designs.length>1?'s':''}</div>
         <div class="prodcard-price">${fmt(p.price)} FCFA</div>
-        <div class="prodcard-stock">Stock : ${p.stock}</div>
+        <div class="prodcard-stock">${stockLabel(p)}</div>
       </div>
     `;
     grid.appendChild(card);
@@ -118,9 +138,11 @@ function initProductPage(){
   document.getElementById('prodName').textContent = product.name;
   document.getElementById('prodDesc').textContent = product.desc;
   document.getElementById('prodPrice').textContent = fmt(product.price) + ' FCFA';
-  document.getElementById('prodStock').textContent = `Il ne reste que ${product.stock} pièces disponibles`;
+  document.getElementById('prodStock').textContent = stockLabel(product);
   document.getElementById('prodBadge').textContent = product.badge || 'Nouveau';
   document.title = product.name + ' — Korgoneere';
+
+  const isOutOfStock = product.badge === 'Rupture de stock' || product.badge === 'Arrivé bientôt';
 
   function setMain(d){
     hero.style.background = `radial-gradient(120% 100% at 15% 0%, rgba(228,199,102,0.35), transparent 55%), linear-gradient(150deg, ${d.grad[0]}, ${d.grad[1]} 70%)`;
@@ -128,7 +150,16 @@ function initProductPage(){
     heroImg.style.display = 'block';
     heroImg.onerror = function(){ heroImg.style.display = 'none'; }; // photo pas encore ajoutée -> fond couleur reste visible
     designNameEl.textContent = d.label;
-    orderLink.href = `commande.html?code=${code}&design=${d.id}`;
+
+    if (isOutOfStock) {
+      orderLink.removeAttribute('href');
+      orderLink.classList.add('disabled');
+      orderLink.setAttribute('aria-disabled', 'true');
+      orderLink.onclick = (e) => e.preventDefault();
+      orderLink.innerHTML = product.badge === 'Arrivé bientôt' ? 'Arrivé bientôt — pas encore disponible' : 'Rupture de stock — indisponible';
+    } else {
+      orderLink.href = `commande.html?code=${code}&design=${d.id}`;
+    }
   }
 
   product.designs.forEach((d, i) => {
@@ -162,6 +193,23 @@ function initOrderPage(){
   const product = PRODUCTS[code];
   const designId = params.get('design');
   const design = product.designs.find(d => d.id === designId) || product.designs[0];
+
+  if (product.badge === 'Rupture de stock' || product.badge === 'Arrivé bientôt') {
+    const isComingSoon = product.badge === 'Arrivé bientôt';
+    document.getElementById('summarySwatch').style.background = '#eee';
+    document.getElementById('summaryName').textContent = product.name;
+    document.getElementById('summaryMeta').textContent = isComingSoon
+      ? 'Ce produit n\'est pas encore disponible à la commande.'
+      : 'Ce produit est actuellement en rupture de stock.';
+    form.innerHTML = `<div class="formtitle">${isComingSoon ? 'Arrivé bientôt' : 'Rupture de stock'}</div>
+      <p style="text-align:center; color:var(--muted); font-size:14px; line-height:1.6;">
+        ${isComingSoon
+          ? "Ce modèle n'est pas encore disponible à la vente. Contactez-nous sur WhatsApp pour être prévenu(e) dès son lancement, ou découvrez nos autres modèles."
+          : "Ce modèle n'est temporairement plus disponible. Contactez-nous sur WhatsApp pour être prévenu(e) dès son retour en stock, ou découvrez nos autres modèles."}
+      </p>
+      <a href="index.html" class="cta" style="text-decoration:none; margin-top:16px;">← Voir le catalogue</a>`;
+    return;
+  }
 
   document.getElementById('summarySwatch').style.background = `linear-gradient(135deg, ${design.grad[0]}, ${design.grad[1]})`;
   document.getElementById('summarySwatch').innerHTML = `<img src="${design.image}" alt="${design.label}" onerror="this.style.display='none'" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">`;

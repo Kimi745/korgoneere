@@ -78,6 +78,7 @@ footer.site-footer{background:var(--teal); padding:24px 20px; text-align:center;
 
 .cta-order{display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin-top:20px; padding:15px; background:var(--orange); color:#fff; border:none; border-radius:10px; font-weight:800; font-size:15.5px; cursor:pointer;}
 .cta-order svg{width:18px; height:18px;}
+.cta-order.disabled{background:#B0B0B0; color:#fff; cursor:not-allowed; pointer-events:none;}
 
 .features{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:28px;}
 .feature{text-align:center;}
